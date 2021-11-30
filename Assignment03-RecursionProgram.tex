@@ -1,0 +1,208 @@
+\documentclass[12pt]{elsart}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{graphicx}
+\newcommand{\field}[1]{\mathbb{#1}}
+
+\usepackage{hyperref}
+ 
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{qtree}
+
+\usepackage{enumitem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Space to make more readable!
+%\vspace{10 mm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Take out later!
+
+%\usepackage[letterpaper,top=0.75in, bottom=0.75in, left=1in, right=1in]{geometry}
+
+\begin{document}
+
+\pagestyle{empty}
+
+\begin{center}
+\Large  CS2124 Data Structures - Spring 2021 \\
+\large {\bf Assignment 3 - Recursion Program}\\
+\normalsize Due 3/19/21 by 11:59pm
+\end{center}
+
+\section{Description} 
+
+Jethro and Cleatus are quarantined at home and bored. They spend most of their day sitting at their computer monitor working or browsing the internet in their small apartment. Out of boredom Jethro begins counting the number of steps needed to reach each location in their small apartment. After seeing that taking different paths from their computer to their coffee maker yields different numbers of steps a question dawns on them. They want to know what is the fewest number of steps needed to reach {\bf all} of the locations in their small apartment starting from their computer.  
+
+Fortunately, Jethro is quite skilled at ASCII art. So they model their room with ASCII characters. A space ` ' can be moved through. An asterisk `*' is a wall or furniture that cannot be traversed (no climbing over furniture!).  Going up, down, left, right one space takes exactly one step (we'll assume no diagonal movements for that sake of simplicity). For example, here is a possible model of their room:
+
+{\small
+\begin{verbatim}
+**************
+* A          *
+*    *       *
+*    *       *
+*  ***       *
+*            *
+*     *****  *
+*     ***    *
+**************
+\end{verbatim}
+}
+
+Assume that (0, 0) is the upper lefthand corner.  For the sake of simplicity you can assume the apartment is enclosed in `*' characters and that the location of Jethro's computer has been marked with an `A'.
+
+Jethro is still new to programming and wants to hire you to write the program to label all of the ` ' locations in their apartment with the minimum number of steps needed to reach them.  To keep with the ASCII art theme you'll use the letters A-Z Such that:
+
+{\small
+\begin{verbatim}
+`A' is 0 steps 
+`B' is 1 step 
+`C' is 2 steps
+...
+`Y' is 24 steps
+`Z' is 25 (or more) steps
+\end{verbatim}
+}
+
+For example, after running your algorithm on it, the apartment above should look as follows:
+
+{\small
+\begin{verbatim}
+**************
+*BABCDEFGHIJK*
+*CBCD*FGHIJKL*
+*DCDE*GHIJKLM*
+*ED***HIJKLMN*
+*FEFGHIJKLMNO*
+*GFGHI*****OP*
+*HGHIJ***RQPQ*
+**************
+\end{verbatim}
+}
+
+Example 2:
+
+{\small
+\begin{verbatim}
+**********************************
+*   A                            *
+**********************************
+\end{verbatim}
+}
+
+After applying your algorithm (we don't count past 'Z' since Jethro has a pretty small apartment):
+
+{\small
+\begin{verbatim}
+**********************************
+*DCBABCDEFGHIJKLMNOPQRSTUVWXYZZZZ*
+**********************************
+\end{verbatim}
+}
+
+Example 3:
+
+{\small
+\begin{verbatim}
+*******
+*A    *
+****  *
+*  *  *
+*******
+\end{verbatim}
+}
+
+After applying your algorithm (unreachable ' ' areas should remain unchanged):
+
+{\small
+\begin{verbatim}
+*******
+*ABCDE*
+****EF*
+*  *FG*
+*******
+\end{verbatim}
+}
+
+\newpage
+
+\section{Problems} 
+
+{\bf Part 1 - Planning: (4 points)}
+
+Write a short brute force recursive idea for solving this problem.  Specifically write a recursive algorithm attempts to update the symbol located at $(x,y)$ where \\$0 \leq x < MAXWIDTH, 0 \leq y < MAXHEIGHT$ and then is recursively called on all adjacent locations.
+
+{\bf Hint 1:} From any given space, you need to try to continue moving up, down, left, and right. DO NOT try to travel diagonally.
+
+{\bf Hint 2:} Your algorithm CAN move into a wall or furniture spot, but upon recognizing it as uncountable, it should return from that call.
+
+{\bf Hint 3:} It may help to track the distance traveled so far from the start. 
+
+\vfill
+
+
+{\bf Part 2 - Programming: (12 points)}
+
+Write a RECURSIVE program in C that implements your recursive algorithm. The program must compile and run on the fox servers. Use valgrind on your program to try to find all possible defects before submitting.
+
+{\bf Hint 1:} chars can be treated like small valued integers.  In particular, it may be helpful to use `$+$' and `$<=$' with your chars.
+
+Your program must output the base room first, and then the updated room when done, like so:
+
+\begin{minipage}[t]{0.5\textwidth}
+{\small
+\begin{verbatim}
+Base room:
+**************
+* A          *
+*    *       *
+*    *       *
+*  ***       *
+*            *
+*     *****  *
+*     ***    *
+**************
+\end{verbatim}
+}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+{\small
+\begin{verbatim}
+Room after algorithm:
+**************
+*BABCDEFGHIJK*
+*CBCD*FGHIJKL*
+*DCDE*GHIJKLM*
+*ED***HIJKLMN*
+*FEFGHIJKLMNO*
+*GFGHI*****OP*
+*HGHIJ***RQPQ*
+**************
+\end{verbatim}
+}
+\end{minipage}
+
+\vfill
+
+
+{\bf Part 3 - Runtime: (4 points)}
+
+What is the runtime complexity of your algorithm?  The are multiple reasonable answers and it depends on your code so be sure to justify your reasoning.
+
+\newpage
+
+{\bf Deliverables:}
+
+Your program solution should be submitted as ``answer3.c'' (also submit any additional files you modified/created to solve this problem).  Your solutions to the planning and runtime parts should be submitted as a single text file (.txt, .pdf, or .doc).
+
+Upload these files to Blackboard under Assignment 3.  {\bf Do not zip your files}. 
+
+To receive full credit, your code must compile and execute. You should use valgrind to
+ensure that you do not have any memory leaks.
+
+{\bf Remember:  
+
+The program you submit should be the work of only you and one other partner. Cheating will be reported to SCCS. Both the copier and copiee will be held responsible.}
+
+\end{document}
